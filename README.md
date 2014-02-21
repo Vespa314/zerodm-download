@@ -7,8 +7,17 @@ zerodm-download-
 
 需要scrapy库支持
 
-##########################
+================
 添加非scrapy版本，实际上效果更好。。
 运行：noscrapy.py
 
-具体注意事项参见：http://www.kylen314.com/archives/5376
+================
+添加Mathematica版本
+参见：mathematica version.txt
+
+================
+添加PHP版本
+参见：zerodm.php
+================
+具体注意事项及原理参见博客：
+http://www.kylen314.com/archives/5376

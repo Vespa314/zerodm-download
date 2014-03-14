@@ -5,14 +5,14 @@ import time
 def GetUrl(content,regexp):
     return re.findall(regexp, content)
  
-#获取下载链接
+#鑾峰彇涓嬭浇閾炬帴
 def GetDownLoadURL(pageurl):
     content = urllib2.urlopen(pageurl).read()
     regexp = r"href=['\"](http.+?sendfile.+?)['\"].*?>"
     for url in GetUrl(content,regexp):
         print url+"\n\n"
  
-#获取下载链接所在页面URL    
+#鑾峰彇涓嬭浇閾炬帴鎵�鍦ㄩ〉闈RL    
 def GetXuneliURL(idx):
     url = "http://dmxz.zerodm.net/xiazai/"+str(idx)+".html"
     content = urllib2.urlopen(url).read()

@@ -7,7 +7,6 @@ Created on Sun Mar 16 19:16:27 2014
 
 import urllib2
 import time
-import os
 import sys
 from zerocommon import *
 
@@ -59,23 +58,6 @@ def CreateDatabase(mode):
         time.sleep(2);
     databasefile.close();
     invalidfile.close();
-
-def GetAnimateList():
-    if not os.path.exists("./database.dat"):
-        print "database.dat not exist!";
-        return None;
-    f = open("database.dat","r");
-    animateList = {};
-    for line in f:
-        info = line.strip("\n").split("::");
-        if animateList.get( int(info[0]) ) != None:
-            print "Item %s(%s) is repeat;"%(info[0],info[1]);
-            f.close();
-            return None;
-        else:
-            animateList[int(info[0])] = info[1];
-    f.close();
-    return animateList;
 
 def RecreateDB(animateList):
     databasefile = open("database.dat","w");

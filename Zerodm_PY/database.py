@@ -8,6 +8,7 @@ Created on Sun Mar 16 19:16:27 2014
 import urllib2
 import time
 import os
+import sys
 from zerocommon import *
 
 def GetAnimateTitle(id):
@@ -29,14 +30,17 @@ def GetBeginIndex():
     if not os.path.exists("./database.dat"):
         return 1;
     f = open("database.dat","r");
+    lastline = "";
     for line in f:
-        pass;
-    f.close()
-    return int(line.split("::")[0])+1;
+        lastline = line;
+    f.close();
+    if len(lastline) == 0:
+        return 1;
+    return int(lastline.split("::")[0])+1;
 
-def CreateDatabase():
-    databasefile = open("database.dat","a+");
-    invalidfile = open("invalid.dat","a+");
+def CreateDatabase(mode):
+    databasefile = open("database.dat",mode);
+    invalidfile = open("invalid.dat",mode);
     id = GetBeginIndex();
     invalid_counter = 0;
     while True:
@@ -117,6 +121,28 @@ def Check():
     ReCreateInvalidFile(invalidlist)
     print "Database Rebuild!"
     
-
+def main(argv):
+    message = """
+Usages:
+========================================================
+python database.py -u[pdate]
+python database.py -c[reate]:Not recommended
+python database.py -r[echeck]:Not recommended
+========================================================
+Learn more detail,please visit:   www.kylen314.com""";
+    if len(argv) != 2 or len(argv[1]) < 2 or argv[1][0] !="-":
+        print message;
+        return;
+    command = argv[1][1].lower();
+    if command == "c":
+        CreateDatabase("w");
+    elif command == "r":
+        Check();
+    elif command == "u":
+        CreateDatabase("a+");
+    else:
+        print message;
+    
+    
 if __name__ == '__main__':
-    Check();
+    main(sys.argv);

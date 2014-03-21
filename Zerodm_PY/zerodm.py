@@ -40,7 +40,7 @@ def ShowAnimateFound(name,idlist,dblist):
             else:
                 return 0;
     
-    print "\nAnimate Found Are List Below,Selece The Index You Want:\n";
+    print "\nAnimate Found Are Listed Below,Select The Index You Want:\n";
     for (i,id) in zip(range(1,len(idlist)+1),idlist):
         print "[%d]:%s"%(i,dblist[id]);
     print "[Q]:quit\n";
@@ -154,7 +154,7 @@ Usages:
 ========================================================
 python zerodm.py AnimateName
 ========================================================
-Learn more detail,please visit:www.kylen314.com"""
+Learn more detail,please visit:   www.kylen314.com/archives/5729"""
         return
     dblist = GetAnimateList();
     idlist = FindAnimate(dblist,argv[1]);

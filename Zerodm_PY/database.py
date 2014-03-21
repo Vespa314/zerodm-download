@@ -111,7 +111,7 @@ python database.py -u[pdate]
 python database.py -c[reate]:Not recommended
 python database.py -r[echeck]:Not recommended
 ========================================================
-Learn more detail,please visit:   www.kylen314.com""";
+Learn more detail,please visit:   www.kylen314.com/archives/5729""";
     if len(argv) != 2 or len(argv[1]) < 2 or argv[1][0] !="-":
         print message;
         return;

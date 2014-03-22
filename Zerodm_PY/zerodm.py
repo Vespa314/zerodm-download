@@ -89,7 +89,9 @@ def GetEpsInfo(id):
     get (url,eps_name)
     """
     url = "http://dmxz.zerodm.net/xiazai/"+str(id)+".html";
-    content = urllib2.urlopen(url).read();
+    headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
+    req = urllib2.Request(url = url,headers = headers);   
+    content = urllib2.urlopen(req).read();
     regexp = r"<a\s*href=['\"](.+?xunlei.+?)['\"].*?>(.*?)</a>";
     return GetRE(content,regexp);
 

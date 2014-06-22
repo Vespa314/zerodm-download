@@ -22,7 +22,7 @@ def FindAnimate(dblist,inputname):
     return bestid;
     
 
-def ShowAnimateFound(name,idlist,dblist):
+def ShowAnimateFound(name,idlist,dblist,quickmode = 0):
     """
     show the animate found, and let user make the choice;
     """
@@ -30,7 +30,7 @@ def ShowAnimateFound(name,idlist,dblist):
         print name," Not Found!!";
         return 0;
     if len(idlist) == 1:
-        if name == dblist[idlist[0]]:
+        if name == dblist[idlist[0]] or quickmode:
             return 1;
         else:
             print "\nDownload :",dblist[idlist[0]],"?[Y/N]";
@@ -40,7 +40,7 @@ def ShowAnimateFound(name,idlist,dblist):
             else:
                 return 0;
     
-    print "\nAnimate Found Are Listed Below,Select The Index You Want:\n";
+    print "\nAnimate <<%s>> Found Are Listed Below,Select The Index You Want:\n"%(name);
     for (i,id) in zip(range(1,len(idlist)+1),idlist):
         print "[%d]:%s"%(i,dblist[id]);
     print "[Q]:quit\n";
@@ -92,6 +92,7 @@ def GetEpsInfo(id):
     headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
     req = urllib2.Request(url = url,headers = headers);   
     content = urllib2.urlopen(req).read();
+    time.sleep(1)
     regexp = r"<a\s*href=['\"](.+?xunlei.+?)['\"].*?>(.*?)</a>";
     return GetRE(content,regexp);
 
@@ -148,20 +149,7 @@ def DownLoad(EPSInfo,eps_range,animate_name):
     
     downloadfile.close();
 
-
-def main(argv):
-    if len(argv) == 1:
-        print """
-Usages:
-========================================================
-python zerodm.py AnimateName
-========================================================
-Learn more detail,please visit:   www.kylen314.com/archives/5729""";
-        return;
-    dblist = GetAnimateList();
-    if dblist == {}:
-        print "Database Read Fail!";
-        return;
+def DownloadSingleAnimate(dblist,argv):
     idlist = FindAnimate(dblist,argv[1]);
     choice = ShowAnimateFound(argv[1],idlist,dblist)-1;
     if choice != -1:
@@ -171,6 +159,52 @@ Learn more detail,please visit:   www.kylen314.com/archives/5729""";
         ShowEpsInfo(EPSInfo);
         Eps_Range = GetChoice();
         DownLoad(EPSInfo,Eps_Range,dblist[idlist[choice]]);
+
+def downloadFile(dblist):
+    AnimateList = {};
+    for animateName in open('downloadlist.txt','r'):
+        if animateName.find('\n')>=0:
+            animateName = animateName.replace('\n','')
+        if animateName.find('\r')>=0:
+            animateName = animateName.replace('\r','')
+        
+        
+        idlist = FindAnimate(dblist,animateName);
+        choice = ShowAnimateFound(animateName,idlist,dblist,1)-1;
+        if choice != -1:
+            AnimateList[idlist[choice]]= dblist[idlist[choice]]
+
+    for id in AnimateList:
+        EPSInfo = GetEpsInfo(id)
+        Eps_Range = range(-1,1000);
+        print 'downloading ',AnimateList[id],'...'
+        DownLoad(EPSInfo,Eps_Range,AnimateList[id]);
+ 
+    print "Finished"
+
+def main(argv):
+    if len(argv) == 1:
+        print """
+Usages:
+========================================================
+Single Animate:
+    python zerodm.py AnimateName
+Animate in file:
+    python zerodm.py downloadlist.txt
+========================================================
+Learn more detail,please visit:   www.kylen314.com/archives/5729""";
+        return;
+        
+    dblist = GetAnimateList();
+    if dblist == {}:
+        print "Database Read Fail!";
+        return;
+    
+    command = argv[1][-4:].lower();
+    if command == ".txt":
+        downloadFile(dblist)
+    else:
+        DownloadSingleAnimate(dblist,argv)
         
 
 if __name__ == '__main__':

@@ -160,9 +160,9 @@ def DownloadSingleAnimate(dblist,argv):
         Eps_Range = GetChoice();
         DownLoad(EPSInfo,Eps_Range,dblist[idlist[choice]]);
 
-def downloadFile(dblist):
+def downloadFile(dblist,filename):
     AnimateList = {};
-    for animateName in open('downloadlist.txt','r'):
+    for animateName in open(filename,'r'):
         if animateName.find('\n')>=0:
             animateName = animateName.replace('\n','')
         if animateName.find('\r')>=0:
@@ -202,7 +202,7 @@ Learn more detail,please visit:   www.kylen314.com/archives/5729""";
     
     command = argv[1][-4:].lower();
     if command == ".txt":
-        downloadFile(dblist)
+        downloadFile(dblist,argv[1])
     else:
         DownloadSingleAnimate(dblist,argv)
         

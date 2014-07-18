@@ -88,7 +88,10 @@ def GetEpsInfo(id):
     """
     get (url,eps_name)
     """
-    url = "http://dmxz.zerodm.net/xiazai/"+str(id)+".html";
+    if GetRE(id,r'\d+') != []:
+        url = "http://dmxz.zerodm.net/xiazai/"+id+".html";
+    else:
+        url = "http://dmxz.zerodm.net/xiazai/"+id;
     headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
     req = urllib2.Request(url = url,headers = headers);   
     content = urllib2.urlopen(req).read();
@@ -154,7 +157,6 @@ def DownloadSingleAnimate(dblist,argv):
     choice = ShowAnimateFound(argv[1],idlist,dblist)-1;
     if choice != -1:
         print "Getting Info of ",dblist[idlist[choice]],".......";
-
         EPSInfo = GetEpsInfo(idlist[choice])
         ShowEpsInfo(EPSInfo);
         Eps_Range = GetChoice();

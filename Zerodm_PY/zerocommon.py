@@ -17,11 +17,6 @@ def GetAnimateList():
     animateList = {};
     for line in f:
         info = line.strip("\n").split("::");
-        if animateList.get( int(info[0]) ) != None:
-            print "Item %s(%s) is repeat;"%(info[0],info[1]);
-            f.close();
-            return None;
-        else:
-            animateList[int(info[0])] = info[1];
+        animateList[info[0]] = info[1];
     f.close();
     return animateList;

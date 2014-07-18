@@ -1,5 +1,3 @@
-由于Zerodm改版，2014月7月新番暂时不能用此方法下，过阵子修复。。
-
 动画下载URL获取器
 ================
 
@@ -54,7 +52,9 @@ python zerodm.py list.txt
 ================
 更新数据库方法：
 
-python database.py -u[pdate]
+python database.py
 
+###注意
+*旧版本需要添加不同参数指定不同更新数据库方式，现在zerodm更新后只有这一种！！*
 
 更多详情，参见：http://www.kylen314.com/archives/5729

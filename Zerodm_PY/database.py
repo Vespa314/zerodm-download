@@ -30,7 +30,7 @@ if __name__ == '__main__':
     for (animateIdx,animateName) in animatelist:
         animateIdx = animateIdx.split(".html");
         animateIdx = animateIdx[0];
-        animateName = animateName.decode('utf8','ignore').encode('gbk','ignore')
+        animateName = animateName
         f.write('%s::%s\n'%(animateIdx,animateName));
         if animateIdx not in Existlist:
             print "Add",animateName

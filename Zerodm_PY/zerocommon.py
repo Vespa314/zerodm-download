@@ -8,6 +8,15 @@ import re
 import os
 def GetRE(content,regexp):
     return re.findall(regexp, content)
+
+def changecoder(item):
+    try:
+        item.decode('gbk','ignore')
+        k=item
+    except:
+        k = item.decode('utf8','ignore').encode('gbk','ignore');
+    k = k.replace(",","")
+    return k
     
 def GetAnimateList():
     if not os.path.exists("./database.dat"):
@@ -17,6 +26,6 @@ def GetAnimateList():
     animateList = {};
     for line in f:
         info = line.strip("\n").split("::");
-        animateList[info[0]] = info[1];
+        animateList[info[0]] = info[1].decode('utf8','ignore').encode('gbk','ignore');
     f.close();
     return animateList;

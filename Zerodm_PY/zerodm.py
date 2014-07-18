@@ -64,7 +64,7 @@ def ShowEpsInfo(EPSInfo):
     eps_list = map(lambda x:x[1],EPSInfo);
     m_str = "";
     for (eps,epsinfo) in zip(range(1,len(eps_list)+1),eps_list):
-        strtemp = "[%d]:%s"%(eps,epsinfo);
+        strtemp = "[%d]:%s"%(eps,epsinfo.decode('utf8','ignore').encode('gbk','ignore'));
         m_str = m_str + strtemp.ljust(15);
         if not (eps % 4):
             m_str = m_str + "\n";
@@ -131,7 +131,7 @@ def DownLoad(EPSInfo,eps_range,animate_name):
     EpsFailList = [];
     for i in range(len(EPSInfo)):
         if i+1 in eps_range:
-            print "Getting Download URL for ",EPSInfo[i][1],":",;
+            print "Getting Download URL for ",EPSInfo[i][1].decode('utf8','ignore').encode('gbk','ignore'),":",;
             downloadlist = GetDLURL_xunlei(EPSInfo[i][0]);
             if len(downloadlist) == 0:
                 print "Get Url Fail!!";

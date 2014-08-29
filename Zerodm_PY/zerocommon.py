@@ -26,6 +26,6 @@ def GetAnimateList():
     animateList = {};
     for line in f:
         info = line.strip("\n").split("::");
-        animateList[info[0]] = info[1].decode('utf8','ignore').encode('gbk','ignore');
+        animateList[info[0]] = info[1];
     f.close();
     return animateList;

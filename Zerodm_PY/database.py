@@ -31,7 +31,7 @@ if __name__ == '__main__':
         animateIdx = animateIdx.split(".html");
         animateIdx = animateIdx[0];
         animateName = animateName
-        f.write('%s::%s\n'%(animateIdx,animateName));
+        f.write('%s::%s\n'%(animateIdx,animateName.decode('utf8','ignore').encode('gbk','ignore')));
         if animateIdx not in Existlist:
             print "Add",animateName
             newcounter += 1

@@ -95,7 +95,7 @@ def GetEpsInfo(id):
         url = "http://dmxz.zerodm.tv/xiazai/"+id
     headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
     req = urllib2.Request(url = url,headers = headers)
-    content = urllib2.urlopen(req).read().decode('gbk','ignore').encode('utf8','ignore')
+    content = toUTF8(urllib2.urlopen(req).read())
     regexp = r"<a\s*href=['\"](.+?xunlei.+?)['\"].*?>(.*?)</a>"
     return GetRE(content,regexp)
 
@@ -127,7 +127,7 @@ def AnimateNameCheck(animate_name):
     return animate_name
 
 def DownLoad(EPSInfo,eps_range,animate_name):
-    animatename = AnimateNameCheck(animate_name)
+    animatename = AnimateNameCheck(encodeFileName(animate_name))
     downloadfile = open(animatename+".txt","w")
     EpsFailList = []
     for i in range(len(EPSInfo)):
@@ -154,8 +154,8 @@ def DownLoad(EPSInfo,eps_range,animate_name):
     downloadfile.close()
 
 def DownloadSingleAnimate(dblist,argv):
-    idlist = FindAnimate(dblist,argv[1])
-    choice = ShowAnimateFound(argv[1],idlist,dblist)-1
+    idlist = FindAnimate(dblist,argv)
+    choice = ShowAnimateFound(argv,idlist,dblist)-1
     if choice != -1:
         print "Getting Info of ",dblist[idlist[choice]],"......."
         EPSInfo = GetEpsInfo(idlist[choice])
@@ -207,7 +207,7 @@ Learn more detail,please visit:   www.kylen314.com/archives/5729"""
     if command == ".txt":
         downloadFile(dblist,argv[1])
     else:
-        DownloadSingleAnimate(dblist,argv)
+        DownloadSingleAnimate(dblist,toUTF8(argv[1]))
 
 if __name__ == '__main__':
     main(sys.argv)

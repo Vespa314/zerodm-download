@@ -6,17 +6,38 @@ Created on Sun Mar 16 19:28:48 2014
 """
 import re
 import os
+import sys
+
+class UnicodeStreamFilter:
+    def __init__(self, target):
+        self.target = target
+        self.encoding = 'utf-8'
+        self.errors = 'replace'
+        self.encode_to = self.target.encoding
+    def write(self, s):
+        if type(s) == str:
+            s = s.decode("utf-8")
+        s = s.encode(self.encode_to, self.errors).decode(self.encode_to)
+        self.target.write(s)
+
+if sys.stdout.encoding == 'cp936':
+    sys.stdout = UnicodeStreamFilter(sys.stdout)
+
 def GetRE(content,regexp):
     return re.findall(regexp, content)
 
-def changecoder(item):
+def toUTF8(input_str):
     try:
-        item.decode('gbk','ignore')
-        k=item
+        input_str.decode('utf8')
     except:
-        k = item.decode('utf8','ignore').encode('gbk','ignore');
-    k = k.replace(",","")
-    return k
+        input_str = input_str.decode('gbk').encode('utf8')
+    return input_str
+
+def encodeFileName(f):
+    if sys.stdin.encoding == 'cp936':
+        return f.decode('utf8').encode('gbk')
+    else:
+        return f
 
 def GetAnimateList():
     if not os.path.exists("./database.dat"):

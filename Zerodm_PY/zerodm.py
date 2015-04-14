@@ -18,7 +18,7 @@ def FindAnimate(dblist,inputname):
     idx = sorted(dblist)
     bestid = []
     for id in idx:
-        if len(re.findall(inputname,dblist[id]))>0:
+        if len(re.findall(inputname.lower(),dblist[id].lower()))>0:
             bestid.append(id)
     return bestid
 

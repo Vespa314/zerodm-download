@@ -104,7 +104,7 @@ def GetDLURL_xunlei(pageurl):
         content = urllib2.urlopen(pageurl).read()
     except:
         return []
-    regexp = r"href=\"(http://gdl\.lixian\.vip\.xunlei\.com/download\?[^\"]*)\" download=\"([^\"]*)"
+    regexp = r"href=\"(http://gdl\.lixian\.vip\.xunlei\.com/[^\"]*)\" download=\"([^\"]*)"
     urllist = GetRE(content,regexp)
     downloadlist = []
     if len(urllist) == 0:

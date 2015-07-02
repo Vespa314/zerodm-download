@@ -89,10 +89,11 @@ def GetEpsInfo(id):
     """
     get (url,eps_name)
     """
-    if GetRE(id,r'\d+') != []:
+    if GetRE(id,r'^\d+$') != []:
         url = "http://dmxz.zerodm.tv/xiazai/"+id+".html"
     else:
         url = "http://dmxz.zerodm.tv/xiazai/"+id
+    print url
     headers = {'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
     req = urllib2.Request(url = url,headers = headers)
     content = toUTF8(urllib2.urlopen(req).read())
